@@ -114,13 +114,18 @@ function shelf(x, R) {
 }
 
 function clock(x, y, now) {
-  const face = r(x, y, 30, 30, "#f4f4f0").border(3).border_color("#5a5a66");
-  const hand = (turns, len, c) => Array.from({ length: len }, (_, i) => {
-    const a = turns * 2 * Math.PI - Math.PI / 2;
-    return r(11 + Math.round(Math.cos(a) * (i + 1) * 1.6), 11 + Math.round(Math.sin(a) * (i + 1) * 1.6), 2, 2, c);
+  // 48px face with hour marks; long black minute hand, short red hour hand.
+  const face = r(x, y, 48, 48, "#f4f4f0").border(3).border_color("#5a5a66");
+  const c = 19, marks = Array.from({ length: 12 }, (_, i) => {
+    const a = (i / 12) * 2 * Math.PI, big = i % 3 === 0, d = big ? 16 : 17, sz = big ? 4 : 2;
+    return r(c + 1 + Math.round(Math.sin(a) * d) - sz / 2, c + 1 - Math.round(Math.cos(a) * d) - sz / 2, sz, sz, big ? "#333" : "#9a9aa6");
+  });
+  const hand = (turns, len, sz, col) => Array.from({ length: len }, (_, i) => {
+    const a = turns * 2 * Math.PI;
+    return r(c + Math.round(Math.sin(a) * (i + 1)), c + -Math.round(Math.cos(a) * (i + 1)), sz, sz, col);
   });
   const m = now.getMinutes(), h = (now.getHours() % 12) + m / 60;
-  return face.children(hand(m / 60, 6, "#333")).children(hand(h / 12, 4, "#a8322a")).child(r(11, 11, 2, 2, "#333"));
+  return face.children(marks).children(hand(h / 12, 9, 3, "#a8322a")).children(hand(m / 60, 14, 2, "#222")).child(r(c - 1, c - 1, 4, 4, "#222"));
 }
 
 function window_(x, hour) {
@@ -158,7 +163,7 @@ export function room(w, h, { seed, now, doorOpen }) {
       ? r(mid - 34, 28, 68, WALL - 28, "#2b1a10").child(r(0, 0, 14, WALL - 28, "#a8643a")).child(r(14, WALL - 40, 54, 12, "#c47d4a"))
       : r(mid - 34, 28, 68, WALL - 28, "#a8643a").child(r(10, 10, 48, 30, "#c47d4a").border(2).border_color("#7a4426")).child(r(56, 62, 6, 6, "#f0c860")),
     shelf(mid - 260, R), shelf(mid + 190, R),
-    clock(mid - 155, 30, now),
+    clock(mid - 165, 34, now),
     r(mid + 90, 36, 26, 32, "#fbfbf6").border(2).border_color("#9a9a9a").children([6, 12, 18, 24].map((y) => r(4, y, 8 + Math.floor(R() * 8), 2, "#777"))),
     window_(w - 340, hour),
     r(w - 200, 40, 50, 60, "#d9b25a").border(4).border_color("#6b3f1f")
@@ -176,6 +181,9 @@ export function room(w, h, { seed, now, doorOpen }) {
 // ---- desks ----------------------------------------------------------------
 
 export const SLOT_W = 170, SLOT_H = 190;
+// Each space (project) gets a rug under its desks.
+export const RUGS = [["#7d93b8", "#5c7298"], ["#8fae7c", "#6a8a58"], ["#c08a94", "#9a6470"], ["#9a88bd", "#76649a"], ["#6fa8a8", "#4f8686"], ["#b89a6a", "#94764a"]];
+
 export const SCREEN = { working: "#1f4d3a", blocked: "#a8322a", done: "#24406e", idle: "#36404c", unknown: "#36404c" };
 
 // Desk clutter, fixed per desk.

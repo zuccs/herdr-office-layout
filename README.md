@@ -29,9 +29,9 @@ running your most-used installed agent (Herdr's `tab.new`).
 | Worker | Screen | Agent status |
 | --- | --- | --- |
 | Bobbing at the keyboard, coffee steaming | green, code scrolling | working |
-| Jumping, **NEEDS YOU** sign over the desk | red `!` | blocked: waiting for you |
+| Jumping | red, blinking **NEEDS YOU** | blocked: waiting for you |
 | Head down, `zZz` | blue `OK` | done while you weren't looking |
-| Sitting still, or out wandering | dim, blinking cursor | idle |
+| Sitting still, or out wandering | bouncing DVD screensaver | idle |
 
 - Idle workers (and now and then finished ones) get up and wander: to the water cooler (back with
   a cup), a bookshelf (with a book), the window, the door, the plant, or another worker's desk for
@@ -43,7 +43,11 @@ running your most-used installed agent (Herdr's `tab.new`).
   at night while desk lamps come on.
 - Click a worker to jump to that agent. Hover a desk for a sticky note with its tab, space, title
   and status.
-- Desks sit in two rows (more when needed) and shrink to fit any number of agents.
+- Each Herdr space (project) gets its own group of desks on a coloured rug, with its name on a
+  tag. Click an empty desk to start an agent in that space.
+- Desks sit in two rows (more when needed) and shrink to fit any number of agents; workers
+  scale with them and stay crisp.
+- Workers keep to their own line in the walkways and wait for each other (and the cat).
 
 Under the office a wood strip shows the current space and tab, and your terminals sit below in
 wood frames.
